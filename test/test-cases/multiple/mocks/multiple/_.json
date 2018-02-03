@@ -1,0 +1,9 @@
+{
+  "_": {
+    "returns": "success"
+  },
+  "foo": {
+    "returns": "success",
+    "args": []
+  }
+}

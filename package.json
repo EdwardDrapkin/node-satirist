@@ -1,0 +1,41 @@
+{
+  "name": "satirist",
+  "version": "0.0.0",
+  "description": "Easily make mock libraries",
+  "main": "index.js",
+  "repository": "https://EdwardDrapkin@github.com/EdwardDrapkin/node-satirist.git",
+  "author": "EdwardDrapkin@gmail.com",
+  "license": "MIT",
+  "private": false,
+  "bin": {
+    "satirist": "./build/gen-flow.js"
+  },
+  "files": [
+    "build/"
+  ],
+  "scripts": {
+    "prepublish": "yarn test && yarn flow && yarn build",
+    "build": "babel src/ -s inline -d build/",
+    "test": "NODE_ENV=TEST nyc mocha  --require babel-register --ui tdd 'test/**/*.test.js' test/cleanup.js",
+    "test:report": "yarn nyc report -- --reporter=html --report-dir=./test-results/tests/"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-istanbul": "^4.1.5",
+    "babel-plugin-transform-flow-comments": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "faker": "^4.1.0",
+    "flow-bin": "^0.64.0",
+    "mocha": "^5.0.0",
+    "nyc": "^11.4.1"
+  },
+  "dependencies": {
+    "mockery": "^2.1.0"
+  },
+  "peerDependencies": {
+    "faker": "^4.1.0"
+  }
+}

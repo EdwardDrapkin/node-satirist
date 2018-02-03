@@ -1,0 +1,10 @@
+{
+  "_": {
+    "args": [
+      {
+        "name": "name"
+      }
+    ],
+    "returns": "success"
+  }
+}

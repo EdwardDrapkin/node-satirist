@@ -1,0 +1,85 @@
+{
+  "_": {
+    "returns": "success"
+  },
+  "foo": {
+    "returns": "success",
+    "args": []
+  },
+  "complexReturn": {
+    "returns": {
+      "foo": "bar"
+    }
+  },
+  "strArrayReturn": {
+    "returns": [
+      "a",
+      "b"
+    ]
+  },
+  "noArgsOrReturn": {},
+  "argsWithNoTypes": {
+    "returns": "success",
+    "args": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  "argsWithColonTypes": {
+    "returns": "success",
+    "args": [
+      "a:string",
+      "b:number",
+      "c:Object"
+    ]
+  },
+  "argsWithObjTypes": {
+    "returns": "success",
+    "args": [
+      {
+        "type": "string",
+        "name": "a"
+      },
+      {
+        "type": "number",
+        "name": "b"
+      },
+      {
+        "type": "Object",
+        "name": "c"
+      }
+    ]
+  },
+  "argsWithArrayTypes": {
+    "returns": "success",
+    "args": [
+      [
+        "a",
+        "string"
+      ],
+      [
+        "b",
+        "number"
+      ],
+      [
+        "c",
+        "Object"
+      ]
+    ]
+  },
+  "argsWithMixedTypes": {
+    "returns": "success",
+    "args": [
+      [
+        "a",
+        "string"
+      ],
+      "b:number",
+      {
+        "type": "Object",
+        "name": "c"
+      }
+    ]
+  }
+}
