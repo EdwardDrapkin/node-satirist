@@ -1,6 +1,6 @@
 {
   "name": "satirist",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Easily make mock libraries",
   "main": "build/MockJSONFactory.js",
   "repository": "https://EdwardDrapkin@github.com/EdwardDrapkin/node-satirist.git",
