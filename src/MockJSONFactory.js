@@ -50,7 +50,7 @@ module.exports = class MockJSONFactory {
 
     register() {
         const mocks = this.toMockeryMocks();
-        mocks.forEach(mock => {
+        Object.keys(mocks).forEach(mock => {
             mockery.registerMock(mock, mocks[mock]);
         });
 

@@ -2,7 +2,7 @@
   "name": "satirist",
   "version": "0.0.0",
   "description": "Easily make mock libraries",
-  "main": "index.js",
+  "main": "build/MockJSONFactory.js",
   "repository": "https://EdwardDrapkin@github.com/EdwardDrapkin/node-satirist.git",
   "author": "EdwardDrapkin@gmail.com",
   "license": "MIT",
