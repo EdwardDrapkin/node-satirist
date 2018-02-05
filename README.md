@@ -58,6 +58,7 @@ Satirist only supports exporting functions on modules.  The full spectrum of pos
     {
         "_": {
             // returns is optional and defaults to void
+            // you can use the keyword "resolves" instead of "returns" for Promise support
             // args are optional and defaults to 0
         },
        
@@ -65,6 +66,10 @@ Satirist only supports exporting functions on modules.  The full spectrum of pos
          
         "justAReturn": {
             "returns": 2 // you can return a value directly and the mocks will return it as well
+        }
+        
+        "justAPromise": {
+            "resolves": "eventually..."
         }
     
         "arrayReturn": {

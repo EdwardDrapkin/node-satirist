@@ -13,6 +13,10 @@ declare type ParsedArgs = {
 declare type ParsedReturns = {
     type: string,
     value: any
+} | {
+    type: 'Promise',
+    value: any,
+    resolves: string
 };
 
 declare type ParsedFunc = {
@@ -107,7 +111,17 @@ module.exports = class MockJSONFactory {
                         returns: {}
                     };
 
-                    func.returns = this.constructor.parseRet(parsed[funcName].returns);
+                    if (parsed[funcName].resolves) {
+                        const returns: ParsedReturns = this.constructor.parseRet(parsed[funcName].resolves);
+
+                        func.returns = {
+                            type: 'Promise',
+                            resolves: returns.type,
+                            value: returns.value
+                        };
+                    } else {
+                        func.returns = this.constructor.parseRet(parsed[funcName].returns);
+                    }
 
                     const args = parsed[funcName].args;
                     if (args !== undefined && args !== null) {
@@ -198,6 +212,8 @@ module.exports = class MockJSONFactory {
 
                             if (`${functor.returns.value}`.startsWith('faker.')) {
                                 return eval(functor.returns.value);
+                            } else if (functor.returns.resolves) {
+                                return Promise.resolve(functor.returns.value);
                             } else {
                                 return functor.returns.value;
                             }
@@ -216,8 +232,12 @@ module.exports = class MockJSONFactory {
         return `${name}:${type}`;
     }
 
-    static _flowRet({ type }: { type: string }): string {
-        return `: ${type}`;
+    static _flowRet(returns: ParsedReturns): string {
+        if (returns.resolves && typeof returns.resolves === 'string') {
+            return `: ${returns.type}<${returns.resolves}>`;
+        }
+
+        return `: ${returns.type}`;
     }
 
     static _flowFunc(name: string, func: ParsedFunc) {

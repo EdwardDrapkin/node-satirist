@@ -141,6 +141,19 @@ suite('MockJSONFactory', () => {
                 assert(flowStr.match(/noArgsOrReturn\(\): void/));
             });
         });
+    });
 
+    suite('Promise support', () => {
+        test('Resolves instead of returns', () => {
+            const factory = getFactory('promises');
+            const flowStr = factory.toFlowString();
+
+            assert(flowStr.match(/Promise<string>/));
+
+            assert(require('promise-support')() instanceof Promise);
+            return require('promise-support')().then((res) => {
+                assert(res === 'success');
+            });
+        });
     });
 });
