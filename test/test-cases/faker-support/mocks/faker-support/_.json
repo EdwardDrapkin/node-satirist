@@ -4,5 +4,14 @@
   },
   "noargs": {
     "returns": "<% random.uuid %>"
+  },
+  "nested": {
+    "returns": {
+      "deep": {
+        "nested": {
+          "fake": "<% random.uuid %>"
+        }
+      }
+    }
   }
 }

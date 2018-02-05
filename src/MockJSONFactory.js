@@ -179,6 +179,43 @@ module.exports = class MockJSONFactory {
         return moduleDef;
     }
 
+    _parseFaker(input: any) {
+        if (Array.isArray(input)) {
+            return input.map((e) => this._parseFaker(e));
+        } else if (Object(input) === input) {
+            return Object.keys(input).map((key) => {
+                return {
+                    key,
+                    val: this._parseFaker(input[key])
+                };
+            }).reduce((acc, curr) => {
+                acc[curr.key] = curr.val;
+                return acc;
+            }, {});
+        } else {
+            const str = `${input}`;
+            if (str.startsWith('faker.') && str.endsWith(')')) {
+                const names = str.split('.');
+
+                let fake = faker;
+                names.shift();
+                while (names.length > 1) {
+                    const next = names.shift();
+                    fake = fake[next];
+                }
+
+                const functor = names.shift();
+                const splitByArgs = functor.split('(');
+                const funcName = splitByArgs[0];
+                const argsList = splitByArgs[1].substr(0, splitByArgs[1].length - 1).split(',').filter(e => e);
+
+                return fake[funcName].apply(faker, argsList);
+            }
+        }
+
+        return input;
+    }
+
     toMockeryMocks() {
         const reduceFirst = (acc: Object, curr: [string, any]) => {
             acc[curr[0]] = curr[1];
@@ -210,12 +247,12 @@ module.exports = class MockJSONFactory {
                                     `got ${args.length} instead.`);
                             }
 
-                            if (`${functor.returns.value}`.startsWith('faker.')) {
-                                return eval(functor.returns.value);
-                            } else if (functor.returns.resolves) {
-                                return Promise.resolve(functor.returns.value);
+                            const parsedFaker = this._parseFaker(functor.returns.value);
+
+                            if (functor.returns.resolves) {
+                                return Promise.resolve(parsedFaker);
                             } else {
-                                return functor.returns.value;
+                                return parsedFaker;
                             }
                         }
                     ];

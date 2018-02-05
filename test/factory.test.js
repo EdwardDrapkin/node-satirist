@@ -78,6 +78,11 @@ suite('MockJSONFactory', () => {
         test('invocation parens are optional for no args', () => {
             assert(require('faker-support').noargs().length === 36);
         });
+
+        test('Deeply nested keys are replaced as well', () => {
+            assert(require('faker-support').nested().deep.nested.fake.length === 36);
+
+        });
     });
 
     suite('mockery callbacks', () => {
