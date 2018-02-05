@@ -297,6 +297,12 @@ module.exports = class MockJSONFactory {
                     value: ret
                 };
             } else if (Object(ret) === ret) {
+                if (Object.keys(ret).length === 2 && ret.value && ret.type) {
+                    return {
+                        type: JSON.stringify(ret.type, null, 4).replace(/"([^"]+)"/g, '$1'),
+                        value: ret.value
+                    };
+                }
                 return {
                     type: 'Object',
                     value: ret
@@ -324,7 +330,7 @@ module.exports = class MockJSONFactory {
             }
 
             return {
-                type: arg.type,
+                type: JSON.stringify(arg.type, null, 4).replace(/"([^"]+)"/g, '$1'),
                 name: arg.name
             };
         } else {
